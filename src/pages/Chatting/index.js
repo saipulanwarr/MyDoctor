@@ -10,10 +10,10 @@ const Chatting = () => {
       <Header type="dark-profile" title="Saipul Anwar" />
       <View style={styles.content}>
         <Text style={styles.chatDate}>21, Maret 2020</Text>
+        <ChatItem isMe />
         <ChatItem />
         <ChatItem />
-        <ChatItem />
-        <ChatItem />
+        <ChatItem isMe />
       </View>
       <InputChat />
     </View>
