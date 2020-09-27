@@ -8,4 +8,4 @@ export const useForm = (initialValue) => {
       setValues({...values, [formType]: formValue});
     },
   ];
-}
+};
