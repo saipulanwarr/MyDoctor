@@ -4,6 +4,7 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import {Header, Input, Button, Gap, Loading} from '../../components';
 import {colors, useForm} from '../../utils';
 import {Fire} from '../../config';
+import {showMessage} from 'react-native-flash-message';
 
 const Register = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -16,11 +17,10 @@ const Register = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const onContinue = () => {
-    console.log(form);
     setLoading(true);
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
-      .then(success => {
+      .then((success) => {
         setLoading(false);
         setForm('reset');
         console.log('success', success);
@@ -28,7 +28,12 @@ const Register = ({navigation}) => {
       .catch((error) => {
         setLoading(false);
         const errorMessage = error.message;
-        console.log('error message', errorMessage);
+        showMessage({
+          message: errorMessage,
+          type: 'default',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
       });
   };
 
