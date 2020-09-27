@@ -16,11 +16,13 @@ const Register = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const onContinue = () => {
+    console.log(form);
     setLoading(true);
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
-      .then((success) => {
+      .then(success => {
         setLoading(false);
+        setForm('reset');
         console.log('success', success);
       })
       .catch((error) => {
@@ -61,7 +63,7 @@ const Register = ({navigation}) => {
               secureTextEntry
             />
             <Gap height={40} />
-            <Button title="Continue" onPress={() => onContinue()} />
+            <Button title="Continue" onPress={onContinue} />
           </View>
         </ScrollView>
       </View>
