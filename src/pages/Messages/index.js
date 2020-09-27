@@ -3,12 +3,12 @@ import {StyleSheet, Text, View} from 'react-native';
 import {List} from '../../components';
 import {colors, fonts} from '../../utils';
 
-const Messages = () => {
+const Messages = ({navigation}) => {
   return (
     <View style={styles.page}>
       <View style={styles.content}>
         <Text style={styles.title}>Messages</Text>
-        <List />
+        <List onPress={() => navigation.navigate('Chatting')} />
         <List />
         <List />
       </View>
