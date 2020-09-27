@@ -11,7 +11,11 @@ const UserProfile = ({navigation}) => {
       <Gap height={10} />
       <Profile />
       <Gap height={14} />
-      <List type="next" icon="edit-profile" />
+      <List
+        type="next"
+        icon="edit-profile"
+        onPress={() => navigation.navigate('UpdateProfile')}
+      />
       <List type="next" icon="language" />
       <List type="next" icon="rate" />
       <List type="next" icon="help" />

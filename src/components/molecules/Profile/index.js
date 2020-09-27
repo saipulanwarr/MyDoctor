@@ -1,16 +1,21 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {DummyUser} from '../../../assets';
+import {DummyUser, IconRemovePhoto} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-const Profile = () => {
+const Profile = ({name, desc}) => {
   return (
     <View style={styles.container}>
       <View style={styles.borderProfile}>
         <Image source={DummyUser} style={styles.avatar} />
+        <IconRemovePhoto style={styles.removePhoto} />
       </View>
-      <Text style={styles.name}>Component Profile</Text>
-      <Text style={styles.profession}>Mobile Developer</Text>
+      {name && (
+        <View>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.profession}>{desc}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -43,9 +48,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   profession: {
-      fontSize: 16,
-      fontFamily: fonts.primary[600],
-      color: colors.text.primary,
-      marginTop: 2,
-  }
+    fontSize: 16,
+    fontFamily: fonts.primary[600],
+    color: colors.text.primary,
+    marginTop: 2,
+  },
+  removePhoto: {
+    position: 'absolute',
+    right: 8,
+    bottom: 8,
+  },
 });
