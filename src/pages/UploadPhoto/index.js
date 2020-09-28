@@ -1,29 +1,38 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
 import {Header, Button, Link, Gap} from '../../components';
 import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
 import {colors, fonts} from '../../utils';
 
 const UploadPhoto = ({navigation}) => {
-  const [hasPhoto, setPhoto] = useState(false);
+  const [hasPhoto, setHasPhoto] = useState(false);
+  const [photo, setPhoto] = useState(ILNullPhoto);
+
+  const getImage = () => {
+    ImagePicker.launchImageLibrary({}, (response) => {
+      setPhoto({uri: response.uri});
+      setHasPhoto(true);
+    });
+  };
 
   return (
     <View style={styles.page}>
       <Header title="Upload Photo" />
       <View style={styles.content}>
         <View style={styles.profile}>
-          <View style={styles.avatarWrapper}>
-            <Image source={ILNullPhoto} style={styles.avatar} />
+          <TouchableOpacity style={styles.avatarWrapper} onPress={getImage}>
+            <Image source={photo} style={styles.avatar} />
             {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
             {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
-          </View>
+          </TouchableOpacity>
           <Text style={styles.name}>Saipul Anwar</Text>
           <Text style={styles.profession}>Mobile Developer</Text>
         </View>
         <View>
           <Button
-            disable
+            disable={!hasPhoto}
             title="Upload and Continue"
             onPress={() => navigation.replace('MainApp')}
           />
@@ -61,6 +70,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 110,
     height: 110,
+    borderRadius: 110 / 2,
   },
   avatarWrapper: {
     width: 130,
