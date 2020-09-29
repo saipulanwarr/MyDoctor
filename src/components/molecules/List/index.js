@@ -10,7 +10,7 @@ import {
 } from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-const List = ({type, onPress, icon}) => {
+const List = ({name, desc, type, onPress, icon}) => {
   const Icon = () => {
     if (icon === 'edit-profile') {
       return <IconEditProfile />;
@@ -31,8 +31,8 @@ const List = ({type, onPress, icon}) => {
     <TouchableOpacity style={styles.container} onPress={onPress}>
       {icon ? <Icon /> : <Image source={DummyDoctor2} style={styles.avatar} />}
       <View style={styles.content}>
-        <Text style={styles.name}>Saipul Anwar</Text>
-        <Text style={styles.desc}>Baik buu terima kasih</Text>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.desc}>{desc}</Text>
       </View>
       {type === 'next' && <IconNext />}
     </TouchableOpacity>

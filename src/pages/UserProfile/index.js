@@ -33,13 +33,15 @@ const UserProfile = ({navigation}) => {
       )}
       <Gap height={14} />
       <List
+        name="Edit Profile"
+        desc="last update"
         type="next"
         icon="edit-profile"
         onPress={() => navigation.navigate('UpdateProfile')}
       />
-      <List type="next" icon="language" />
-      <List type="next" icon="rate" />
-      <List type="next" icon="help" />
+      <List type="next" icon="language" name="Laguage" desc="laguage" />
+      <List type="next" icon="rate" name="Rate" desc="rate" />
+      <List type="next" icon="help" name="Help" desc="help" />
     </View>
   );
 };
