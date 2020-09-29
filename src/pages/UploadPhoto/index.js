@@ -5,7 +5,7 @@ import {showMessage} from 'react-native-flash-message';
 
 import {Header, Button, Link, Gap} from '../../components';
 import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
-import {colors, fonts} from '../../utils';
+import {colors, fonts, storeData} from '../../utils';
 import {Fire} from '../../config';
 
 const UploadPhoto = ({navigation, route}) => {
@@ -38,6 +38,11 @@ const UploadPhoto = ({navigation, route}) => {
     Fire.database()
       .ref('users/' + uid + '/')
       .update({photo: photoForDB});
+
+    const data = route.params;
+    data.photo = photoForDB;
+
+    storeData('user', data);
 
     navigation.replace('MainApp');
   };
