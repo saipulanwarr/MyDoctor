@@ -33,8 +33,7 @@ const Register = ({navigation}) => {
         storeData('user', data);
         setLoading(false);
         setForm('reset');
-        console.log('success', success);
-        navigation.navigate('UploadPhoto');
+        navigation.navigate('UploadPhoto', data);
       })
       .catch((error) => {
         setLoading(false);
