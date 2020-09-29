@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {ILNullPhoto} from '../../assets';
 import {showMessage} from 'react-native-flash-message';
+import ImagePicker from 'react-native-image-picker';
 
 import {Header, Profile, Input, Button, Gap} from '../../components';
-import {colors, getData} from '../../utils';
+import {colors, getData, storeData} from '../../utils';
 import {Fire} from '../../config';
 
 const UpdateProfile = ({navigation}) => {
@@ -12,14 +13,15 @@ const UpdateProfile = ({navigation}) => {
     fullName: '',
     profession: '',
     email: '',
-    photo: ILNullPhoto,
   });
   const [password, setPassword] = useState('');
+  const [photo, setPhoto] = useState(ILNullPhoto);
+  const [photoForDB, setPhotoForDB] = useState('');
 
   useEffect(() => {
     getData('user').then((res) => {
       const data = res;
-      data.photo = {uri: res.photo};
+      setPhoto({uri: res.photo});
       setProfile(data);
     });
   }, []);
@@ -33,13 +35,13 @@ const UpdateProfile = ({navigation}) => {
 
   const update = () => {
     const data = profile;
-    data.photo = profile.photo.uri;
+    data.photo = photoForDB;
 
     Fire.database()
       .ref(`users/${profile.uid}/`)
       .update(data)
       .then(() => {
-        console.log('success');
+        storeData('user', data);
       })
       .catch((error) => {
         showMessage({
@@ -50,12 +52,32 @@ const UpdateProfile = ({navigation}) => {
         });
       });
   };
+
+  const getImage = () => {
+    ImagePicker.launchImageLibrary(
+      {quality: 0.5, maxWidth: 200, maxHeight: 200},
+      (response) => {
+        if (response.didCancel || response.error) {
+          showMessage({
+            message: 'oops, sepertinya anda tidak memilih memilih fotonya?',
+            type: 'default',
+            backgroundColor: colors.error,
+            color: colors.white,
+          });
+        } else {
+          setPhotoForDB(`data:${response.type};base64, ${response.data}`);
+          setPhoto({uri: response.uri});
+        }
+      },
+    );
+  };
+
   return (
     <View style={styles.page}>
       <Header title="Edit Profile" onPress={() => navigation.goBack()} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <Profile isRemove photo={profile.photo} />
+          <Profile isRemove photo={photo} onPress={getImage} />
           <Gap height={26} />
           <Input
             label="Full Name"
