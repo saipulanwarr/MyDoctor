@@ -1,11 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
 
 import {ILLogo} from '../../assets';
 import {Input, Link, Button, Gap} from '../../components';
-import {colors, fonts, storeData, useForm} from '../../utils';
+import {colors, fonts, storeData, useForm, showError} from '../../utils';
 import {Fire} from '../../config';
 
 const Login = ({navigation}) => {
@@ -30,12 +29,7 @@ const Login = ({navigation}) => {
       })
       .catch((error) => {
         dispatch({type: 'SET_LOADING', value: false});
-        showMessage({
-          message: error.message,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError(error.message);
       });
   };
   return (
